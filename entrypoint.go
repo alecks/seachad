@@ -18,6 +18,14 @@ func main() {
 				Name:    "serve",
 				Aliases: []string{"s"},
 				Usage:   "Starts a Seachad server",
+				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:    "development",
+						Aliases: []string{"dev"},
+						Value:   false,
+						Usage:   "Development mode; verbose logging + doc generation",
+					},
+				},
 				Action: func(c *cli.Context) error {
 					addr := c.Args().Get(0)
 					if addr == "" {
@@ -26,8 +34,15 @@ func main() {
 						addr = ":" + addr
 					}
 
+					dev := c.Bool("development")
+					if dev {
+						if err := genDocs(); err != nil {
+							return err
+						}
+					}
 					server := web.Server{
-						Address: addr,
+						Address:     addr,
+						Development: dev,
 					}
 					server.Init()
 					return server.Run()
@@ -38,7 +53,7 @@ func main() {
 				Aliases: []string{"d"},
 				Usage:   "Generates documentation",
 				Action: func(c *cli.Context) error {
-					return exec.Command("swag", "init", "--dir", "core/web").Run()
+					return genDocs()
 				},
 			},
 		},
@@ -47,4 +62,8 @@ func main() {
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func genDocs() error {
+	return exec.Command("swag", "init", "--dir", "core/web").Run()
 }

@@ -20,7 +20,8 @@ import (
 
 // Server is a Seachad web server.
 type Server struct {
-	Address string
+	Address     string
+	Development bool
 	// TODO: SSL/TLS
 
 	engine *gin.Engine
@@ -29,6 +30,10 @@ type Server struct {
 // Init sets up the server.
 func (s *Server) Init() {
 	s.engine = gin.New()
+	if !s.Development {
+		gin.SetMode(gin.ReleaseMode)
+	}
+
 	url := ginSwagger.URL("/swagger/doc.json")
 	s.engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 }
