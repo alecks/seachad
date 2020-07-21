@@ -18,8 +18,13 @@ var doc = `{
     "info": {
         "description": "{{.Description}}",
         "title": "{{.Title}}",
-        "contact": {},
-        "license": {},
+        "contact": {
+            "name": "GitHub",
+            "url": "https://github.com/fjah/seachad/issues/new"
+        },
+        "license": {
+            "name": "BSD-3-Clause"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -38,12 +43,12 @@ type swaggerInfo struct {
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
-	Version:     "",
+	Version:     "1.0",
 	Host:        "",
-	BasePath:    "",
+	BasePath:    "/api/v1",
 	Schemes:     []string{},
-	Title:       "",
-	Description: "",
+	Title:       "Seachad API",
+	Description: "The API for Seachad, a free, open-source and customisable donation site.",
 }
 
 type s struct{}

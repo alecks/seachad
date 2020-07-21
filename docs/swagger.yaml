@@ -1,5 +1,12 @@
+basePath: /api/v1
 info:
-  contact: {}
-  license: {}
+  contact:
+    name: GitHub
+    url: https://github.com/fjah/seachad/issues/new
+  description: The API for Seachad, a free, open-source and customisable donation site.
+  license:
+    name: BSD-3-Clause
+  title: Seachad API
+  version: "1.0"
 paths: {}
 swagger: "2.0"
