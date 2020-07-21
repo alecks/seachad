@@ -36,6 +36,7 @@ func (s *Server) Init() {
 
 	url := ginSwagger.URL("/swagger/doc.json")
 	s.engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
+	s.setRoutes()
 }
 
 // Run runs the HTTP server.
